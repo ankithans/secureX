@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: login_api
+    build: .
+    ports:
+      - 8080:8080
+    restart: on-failure
+    environment:
+      PORT: 8080
+    volumes:
+      - .:/app
