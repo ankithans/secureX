@@ -12,14 +12,14 @@ var Users []models.User = []models.User{
 	},
 	{
 		Username: "johndoe01",
-		Password: "abc@def",
+		Password: "abc@de",
 		Name:     "John Doe",
 		Phone:    8877898893,
 		Address:  "3971 James Avenue, RANIER, Minnesota",
 	},
 	{
 		Username: "ap23",
-		Password: "abc@def",
+		Password: "abc@de",
 		Name:     "Aryamaan",
 		Phone:    8877898893,
 		Address:  "3971 James Avenue, RANIER, Minnesota",
