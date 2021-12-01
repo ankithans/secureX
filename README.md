@@ -1,4 +1,18 @@
+> NOTE: under contruction
+
 # SecureX
+Spawning up Decoy Server in case of any fraudulent activity and directing the intruder towards the decoy. Auto Killing the decoy if it is idle for too long.
+
+
+> Here Decoy is Dockerised Golang API and the attack that is considered is Password Spray Attack
+
+
+<!-- <img src="./mockups/workflow.png" /> -->
+## Process Diagram
+<img src="./mockups/process.png" />
+
+## Tech Stack
+Golang, Docker, SMTP, MongoDB
 
 ## Tasks
 1. ~~Create a golang API for login~~
@@ -10,3 +24,5 @@
 7. Audit Logging service in the container API
 8. Notification service in the container API
 9. Improve dataset for logins
+
+> Made with love by [Ankit Hans](https://www.github.com/ankithans)
