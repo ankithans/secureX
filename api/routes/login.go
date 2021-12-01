@@ -17,11 +17,22 @@ import (
 var loginCountByPort = make(map[string]int)
 var lastFraudLoginTime = time.Now()
 
+var colorReset = "\033[0m"
+
+var colorRed = "\033[31m"
+var colorGreen = "\033[32m"
+var colorYellow = "\033[33m"
+var colorBlue = "\033[34m"
+var colorPurple = "\033[35m"
+var colorCyan = "\033[36m"
+var colorWhite = "\033[37m"
+
 func Login(c *fiber.Ctx) error {
+
 	username := c.Query("username")
 	password := c.Query("password")
 
-	fmt.Println(c.Port())
+	fmt.Println("User from port:", string(colorBlue), c.Port(), string(colorReset))
 
 	timeNow := time.Now()
 	timeDiff := timeNow.Sub(lastFraudLoginTime)
@@ -32,7 +43,7 @@ func Login(c *fiber.Ctx) error {
 
 	if loginCountByPort[c.Port()] >= 3 {
 		lastFraudLoginTime = time.Now()
-		fmt.Println("Intruder detected; redirecting to decoy")
+		fmt.Println(string(colorYellow), "Intruder detected; redirecting to decoy")
 
 		secure.RunApiContainer()
 

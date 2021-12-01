@@ -13,7 +13,18 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
+var colorReset = "\033[0m"
+
+var colorRed = "\033[31m"
+var colorGreen = "\033[32m"
+var colorYellow = "\033[33m"
+var colorBlue = "\033[34m"
+var colorPurple = "\033[35m"
+var colorCyan = "\033[36m"
+var colorWhite = "\033[37m"
+
 func RunApiContainer() {
+	fmt.Println(string(colorPurple), "Spawning up the decoy")
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
@@ -29,7 +40,7 @@ func RunApiContainer() {
 
 	for _, container := range containers {
 		if container.Image == imageName {
-			fmt.Println("container already running")
+			fmt.Println(string(colorCyan), "container already running")
 			return
 		}
 	}
@@ -77,12 +88,12 @@ func StopApiContainer() {
 
 	for _, container := range containers {
 		if container.Image == imageName {
-			fmt.Print("Stopping container ", container.ID[:10], container.Image, "... ")
+			fmt.Print(string(colorRed), "Stopping idle container ", container.ID[:10], container.Image, "... ")
 			if err := cli.ContainerKill(ctx, container.ID, "SIGHUP"); err != nil {
 				panic(err)
 			}
 
-			fmt.Println("Successfully Stopped")
+			fmt.Println(string(colorWhite), "Successfully Stopped")
 		}
 	}
 }
