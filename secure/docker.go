@@ -60,3 +60,29 @@ func RunApiContainer() {
 	fmt.Println(resp.ID)
 	time.Sleep(1 * time.Second)
 }
+
+func StopApiContainer() {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		panic(err)
+	}
+
+	imageName := "ankithans/securex_app"
+
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+	if err != nil {
+		panic(err)
+	}
+
+	for _, container := range containers {
+		if container.Image == imageName {
+			fmt.Print("Stopping container ", container.ID[:10], container.Image, "... ")
+			if err := cli.ContainerKill(ctx, container.ID, "SIGHUP"); err != nil {
+				panic(err)
+			}
+
+			fmt.Println("Successfully Stopped")
+		}
+	}
+}

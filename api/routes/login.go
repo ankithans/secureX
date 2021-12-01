@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/ankithans/secureX/api/repository"
 	"github.com/ankithans/secureX/api/utils"
@@ -13,14 +14,24 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var loginCount = make(map[string]int)
+var loginCountByPort = make(map[string]int)
+var lastFraudLoginTime = time.Now()
 
 func Login(c *fiber.Ctx) error {
 	username := c.Query("username")
 	password := c.Query("password")
 
 	fmt.Println(c.Port())
-	if loginCount[c.Port()] >= 3 {
+
+	timeNow := time.Now()
+	timeDiff := timeNow.Sub(lastFraudLoginTime)
+	if timeDiff.Minutes() >= 1 {
+		// close docker container
+		go secure.StopApiContainer()
+	}
+
+	if loginCountByPort[c.Port()] >= 3 {
+		lastFraudLoginTime = time.Now()
 		fmt.Println("Intruder detected; redirecting to decoy")
 
 		secure.RunApiContainer()
@@ -40,12 +51,9 @@ func Login(c *fiber.Ctx) error {
 		var jsonResult map[string]interface{}
 		json.Unmarshal(responseData, &jsonResult)
 		return c.JSON(jsonResult)
-
-		// fmt.Println(string(responseData))
-
-		// return c.JSON((fiber.Map{"status": 403, "message": "Logged in multiple times"}))
 	}
-	loginCount[c.Port()]++
+
+	loginCountByPort[c.Port()]++
 
 	// check username in repository
 	if !repository.FindUsername(username) {
