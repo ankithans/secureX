@@ -22,6 +22,18 @@ func RunApiContainer() {
 
 	imageName := "ankithans/securex_app"
 
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+	if err != nil {
+		panic(err)
+	}
+
+	for _, container := range containers {
+		if container.Image == imageName {
+			fmt.Println("container already running")
+			return
+		}
+	}
+
 	out, err := cli.ImagePull(ctx, imageName, types.ImagePullOptions{})
 	if err != nil {
 		panic(err)
