@@ -42,7 +42,7 @@ func Login(c *fiber.Ctx, db *gorm.DB) error {
 	timeNow := time.Now()
 	timeDiff := timeNow.Sub(lastFraudLoginTime)
 	if timeDiff.Minutes() >= 1 {
-		// close docker container
+		// kill docker container
 		go secure.StopApiContainer()
 	}
 
@@ -128,7 +128,7 @@ func sendMail(message string) {
 		os.Exit(1)
 	}
 
-	fmt.Println("Successfully sent mail to all user in toList")
+	fmt.Println(string(colorBlue), "Successfully sent mail to the responsible team", string(colorReset))
 }
 
 func goDotEnvVariable(key string) string {

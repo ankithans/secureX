@@ -14,7 +14,7 @@ func main() {
 
 // Password spray
 func PasswordSpray() {
-	var usernames []string = []string{"ankithans", "johndoe01", "ap23", "pateladit01"}
+	var usernames []string = []string{"ankithans", "johndoe01", "ap23", "pateladit01", "abc", "def", "ffdd", "sdwdw", "sdwwd"}
 	var password = "abc@def"
 
 	for _, username := range usernames {

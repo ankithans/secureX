@@ -1,4 +1,4 @@
-> NOTE: under contruction
+<!-- > NOTE: under contruction -->
 
 # SecureX
 Spawning up Decoy Server in case of any fraudulent activity and directing the intruder towards the decoy. Auto Killing the decoy if it is idle for too long.
@@ -13,8 +13,42 @@ Spawning up Decoy Server in case of any fraudulent activity and directing the in
 ## Process Diagram
 <img src="./mockups/process.png" />
 
+## Services
+#### Fraud Detection Service
+Currently the detection of Password Spray Attack is done using its own properties. Attackers attempt the same password on many accounts before moving on to another and repeating the process
+- Counting number of logins from the same Port which are done simultaneously
+- If count is greater than a threshold then declare it as a Password Spray attack
+
+#### Redirection Service
+In case of Fraud
+- Spawning up of Decoy Machine
+- Notifying on mailing list
+- Redirecting the API call to Decoy Server
+
+#### On Demand Decoy Service
+- Docker Container as a Decoy
+- Fake Data and Configuration while ensuring similar experience as original server to the Intruder
+- All the Activities in Decoy are Recorded and Monitored as Audit Logs
+- Auto Kill the Decoy if it is idle for more than a minute (using concurrency)
+
+#### Notification Service
+- Notifying the teams that are responsible for taking action against the fraudulent activity
+- Using SMTP Email Services
+
+#### Audit Logging Service
+- Recording all interactions of Intruder with Decoy
+- Storing IP, Port, Network Type, Location, Description and status of the Activity
+- Useful to Recreate the whole Process if required
+
+## Mockups
+<img src="./mockups/01.png" />
+<img src="./mockups/02.png" />
+<img src="./mockups/03.png" />
+<img src="./mockups/04.png" />
+
+
 ## Tech Stack
-Golang, Docker, SMTP, PostgreSQL
+Golang, Docker, SMTP, PostgreSQL, Scripting
 
 ## Tasks
 1. ~~Create a golang API for login~~
@@ -24,7 +58,8 @@ Golang, Docker, SMTP, PostgreSQL
 5. ~~Redirect the intruder to server created by docker container~~
 6. ~~Shut down container if it is idle~~
 7. ~~Audit Logging service in the container API~~
-8. Notification service in the container API
-9. Improve dataset for logins
+8. ~~Notification service in the container API~~
+9. ~~Improve dataset for logins~~
+
 ---
 > Made with love by [Ankit Hans](https://www.github.com/ankithans)

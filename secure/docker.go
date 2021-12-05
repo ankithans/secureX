@@ -69,6 +69,7 @@ func RunApiContainer() {
 	}
 
 	fmt.Println(resp.ID)
+	fmt.Println(string(colorGreen), "Successfuly Redirected to Decoy", string(colorReset))
 	time.Sleep(1 * time.Second)
 }
 

@@ -31,6 +31,13 @@ var Users []models.User = []models.User{
 		Phone:    8877898893,
 		Address:  "3971 James Avenue, RANIER, Minnesota",
 	},
+	{
+		Username: "pateladit01",
+		Password: "abc@def",
+		Name:     "Adit Patel",
+		Phone:    8877898893,
+		Address:  "3971 James Avenue, RANIER, Minnesota",
+	},
 }
 
 func FindUsername(username string) bool {
