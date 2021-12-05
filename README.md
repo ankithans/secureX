@@ -23,7 +23,7 @@ Golang, Docker, SMTP, PostgreSQL
 4. ~~Spawn the Docker container programmatically on a specific port~~
 5. ~~Redirect the intruder to server created by docker container~~
 6. ~~Shut down container if it is idle~~
-7. Audit Logging service in the container API
+7. ~~Audit Logging service in the container API~~
 8. Notification service in the container API
 9. Improve dataset for logins
 ---

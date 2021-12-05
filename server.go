@@ -3,12 +3,13 @@ package main
 import (
 
 	// "github.com/ankithans/secureX/secure"
+
 	"log"
 	"os"
 
-	"github.com/ankithans/secureX/api/models"
 	"github.com/ankithans/secureX/api/routes"
 	"github.com/gofiber/fiber/v2"
+
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,7 +24,7 @@ func main() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&models.AuditLogs{})
+	// db.AutoMigrate(&models.AuditLogs{})
 
 	app := fiber.New()
 
