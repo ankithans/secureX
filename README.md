@@ -13,6 +13,12 @@ Spawning up Decoy Server in case of any fraudulent activity and directing the in
 ## Process Diagram
 <img src="./mockups/process.png" />
 
+## How to run locally
+1. Set up .env file according to the .env.sample file
+2. Email and Password should be a google account while turning on low secure apps
+3. Enter `go run server.go` to run the golang server
+4. Run `go run intruder/password_spray.go` to start password spray simulation
+
 ## Services
 #### Fraud Detection Service
 Currently the detection of Password Spray Attack is done using its own properties. Attackers attempt the same password on many accounts before moving on to another and repeating the process
