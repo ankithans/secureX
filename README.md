@@ -14,7 +14,7 @@ Spawning up Decoy Server in case of any fraudulent activity and directing the in
 <img src="./mockups/process.png" />
 
 ## Tech Stack
-Golang, Docker, SMTP, MongoDB
+Golang, Docker, SMTP, PostgreSQL
 
 ## Tasks
 1. ~~Create a golang API for login~~

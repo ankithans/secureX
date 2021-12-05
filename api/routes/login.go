@@ -8,10 +8,12 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ankithans/secureX/api/models"
 	"github.com/ankithans/secureX/api/repository"
 	"github.com/ankithans/secureX/api/utils"
 	"github.com/ankithans/secureX/secure"
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 var loginCountByPort = make(map[string]int)
@@ -27,12 +29,12 @@ var colorPurple = "\033[35m"
 var colorCyan = "\033[36m"
 var colorWhite = "\033[37m"
 
-func Login(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx, db *gorm.DB) error {
 
 	username := c.Query("username")
 	password := c.Query("password")
 
-	fmt.Println("User from port:", string(colorBlue), c.Port(), string(colorReset))
+	fmt.Println("User from port:", string(colorBlue), c.Context().RemoteAddr().String(), string(colorReset))
 
 	timeNow := time.Now()
 	timeDiff := timeNow.Sub(lastFraudLoginTime)
@@ -42,6 +44,25 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	if loginCountByPort[c.Port()] >= 3 {
+
+		clientIp := c.Context().RemoteAddr()
+
+		auditLog := models.AuditLogs{
+			RemoteAddress: clientIp.String(),
+			Ip:            c.IP(),
+			Port:          c.Port(),
+			Network:       clientIp.Network(),
+			Status:        "danger",
+			Description:   "Logging in with username: " + username + "and password: " + password,
+			Location:      "server",
+		}
+		db.Create(&auditLog)
+
+		// var audit models.AuditLogs
+		// db.First(&audit)
+
+		// fmt.Println(audit)
+
 		lastFraudLoginTime = time.Now()
 		fmt.Println(string(colorYellow), "Intruder detected; redirecting to decoy")
 
